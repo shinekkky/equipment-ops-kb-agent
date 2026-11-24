@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>产品业务流程图</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #f7f9fc; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+    color: #101828;
+    -webkit-font-smoothing: antialiased;
+  }
+  .canvas {
+    width: 1600px; height: 640px; padding: 38px 56px 28px;
+    background:
+      radial-gradient(1100px 300px at 8% -8%, #eaf2ff 0%, rgba(234,242,255,0) 60%),
+      linear-gradient(180deg, #fbfcfe 0%, #f7f9fc 100%);
+  }
+  .head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 26px; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: 2.2px; font-weight: 700; color: #1570ef;
+    margin-bottom: 10px;
+  }
+  h1 { font-size: 31px; line-height: 1.2; margin: 0 0 8px; letter-spacing: .3px; font-weight: 700; }
+  .sub { font-size: 14.5px; color: #667085; line-height: 1.6; margin: 0; }
+  .chips { display: flex; gap: 8px; margin-top: 6px; }
+  .chip {
+    font-size: 12.5px; color: #344054; background: #ffffff; border: 1px solid #e4e7ec;
+    border-radius: 999px; padding: 7px 12px; box-shadow: 0 1px 2px rgba(16,24,40,.03);
+  }
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 34px; }
+  .card {
+    position: relative; display: flex; flex-direction: column;
+    min-height: 330px; padding: 20px 18px 16px;
+    background: #ffffff; border: 1px solid #e4e7ec; border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(16,24,40,.045);
+  }
+  .card::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px;
+    border-radius: 14px 14px 0 0; background: var(--accent);
+  }
+  .card:not(:last-child)::after {
+    content: "→"; position: absolute; right: -31px; top: 45%;
+    transform: translateY(-50%); font-size: 21px; color: #98a2b3; font-weight: 600;
+  }
+  .step {
+    width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 700;
+    color: var(--accent); background: var(--tint); margin-bottom: 13px;
+  }
+  .tag { font-size: 11.5px; font-weight: 700; letter-spacing: 1.6px; color: var(--accent); }
+  h2 { font-size: 18px; line-height: 1.35; margin: 5px 0 9px; font-weight: 700; }
+  .desc { font-size: 13px; line-height: 1.7; color: #475467; margin: 0; }
+  .desc b { color: #344054; font-weight: 600; }
+  .output {
+    margin-top: auto; padding-top: 12px; border-top: 1px dashed #e4e7ec;
+    font-size: 12px; line-height: 1.55; color: #667085;
+  }
+  .output b { color: #344054; font-weight: 600; }
+  .footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 22px; padding-top: 14px; border-top: 1px solid #e4e7ec;
+    font-size: 12.5px; color: #667085;
+  }
+  .footer .left { display: flex; align-items: center; gap: 10px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #12b76a; }
+  .legend { display: flex; gap: 18px; }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .swatch { width: 9px; height: 9px; border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="head">
+    <div>
+      <div class="eyebrow">PRODUCT WORKFLOW / 产品业务流程</div>
+      <h1>从设备数据到可执行处置：一条完整的运维诊断链路</h1>
+      <p class="sub">数据接入 → 异常监测 → 知识检索 → Agent 诊断 → 诊断报告，每一步都有明确的输入与交付物。</p>
+    </div>
+    <div class="chips">
+      <div class="chip">更早发现风险</div>
+      <div class="chip">每条结论有据可查</div>
+      <div class="chip">处置可排期执行</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="card" style="--accent:#1570ef; --tint:#eff8ff;">
+      <div class="step">01</div>
+      <div class="tag">DATA INGESTION</div>
+      <h2>设备运行数据接入</h2>
+      <p class="desc">接入<b>温度、振动、电流、转速、运行状态</b>等时序数据，并关联设备台账与控制系统故障代码。</p>
+      <div class="output"><b>输出</b>　标准化时序数据 + 设备台账</div>
+    </div>
+
+    <div class="card" style="--accent:#d92d20; --tint:#fef3f2;">
+      <div class="step">02</div>
+      <div class="tag">RISK DETECTION</div>
+      <h2>异常监测与风险预警</h2>
+      <p class="desc">四层检测识别已越限、短时突变、缓慢劣化与多参数联合偏移，输出<b>风险等级、证据链与提前量</b>。</p>
+      <div class="output"><b>输出</b>　异常结论 + 风险分级</div>
+    </div>
+
+    <div class="card" style="--accent:#6938ef; --tint:#f4f3ff;">
+      <div class="step">03</div>
+      <div class="tag">KNOWLEDGE RETRIEVAL</div>
+      <h2>知识库检索与故障诊断</h2>
+      <p class="desc">从设备手册、故障知识与历史依据中检索对应章节，给出<b>可回溯的原文出处与处置步骤</b>。</p>
+      <div class="output"><b>输出</b>　命中章节 + 手册依据</div>
+    </div>
+
+    <div class="card" style="--accent:#0e9384; --tint:#f0fdf9;">
+      <div class="step">04</div>
+      <div class="tag">AGENT DIAGNOSIS</div>
+      <h2>Agent 调用诊断工具</h2>
+      <p class="desc">模型通过工具获取真实设备数据与手册内容，完成<b>异常定位、原因分析与处置建议生成</b>，数字不靠估算。</p>
+      <div class="output"><b>输出</b>　带工具轨迹的诊断答复</div>
+    </div>
+
+    <div class="card" style="--accent:#067647; --tint:#ecfdf3;">
+      <div class="step">05</div>
+      <div class="tag">ACTIONABLE REPORT</div>
+      <h2>运维诊断报告</h2>
+      <p class="desc">汇总异常证据、手册依据与<b>P0–P3 处置排期</b>，形成可交接、可审计、可导出的诊断报告。</p>
+      <div class="output"><b>输出</b>　Markdown / PDF 报告</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="left"><span class="dot"></span> 一条结论贯穿“数据 → 判断 → 依据 → 建议 → 行动”，避免监测与处置脱节</div>
+    <div class="legend">
+      <span><i class="swatch" style="background:#1570ef"></i>数据</span>
+      <span><i class="swatch" style="background:#d92d20"></i>风险</span>
+      <span><i class="swatch" style="background:#6938ef"></i>知识</span>
+      <span><i class="swatch" style="background:#0e9384"></i>诊断</span>
+      <span><i class="swatch" style="background:#067647"></i>行动</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

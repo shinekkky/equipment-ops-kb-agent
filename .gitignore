@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 索引缓存与用户上传的文档（不入库）
+.index_cache/
+uploads/*
+!uploads/.gitkeep
+
+# 报告导出产物
+reports_out/
+
+# 临时截图
+.tmp_shots/
+
+# 编辑器
+.vscode/
+.idea/
+.DS_Store

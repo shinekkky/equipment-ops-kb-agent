@@ -1,0 +1,33 @@
+# ============================================================
+#  设备运维知识库 Agent（equipment-ops-kb-agent）—— 依赖清单
+#  需要 Python 3.12（本地验证版本 3.12.2）
+# ============================================================
+
+# --- Web 界面与数据处理 ---
+# 界面统一用 width="stretch"，旧写法 use_container_width 官方已公告移除
+streamlit>=1.50
+pandas>=2.2
+numpy>=1.26
+matplotlib>=3.8
+openpyxl>=3.1
+
+# --- RAG 检索 ---
+jieba>=0.42                    # 中文分词（BM25 使用 cut_for_search）
+langchain-text-splitters>=0.3  # 标题感知分块
+pypdfium2>=4.30                # PDF 文本与书签提取（纯 wheel，无需系统依赖）
+
+# --- 向量检索 ---
+sentence-transformers>=3.0     # 加载 BAAI/bge-small-zh-v1.5
+# torch 请装 CPU 版，默认 pip install torch 会拉数 GB 的 CUDA 包：
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# --- 异常检测 ---
+scikit-learn>=1.4              # IsolationForest 多变量异常检测
+
+# --- 报告导出 ---
+reportlab>=4.0                 # PDF 生成（嵌入 SimHei 字体）
+
+# --- Agent ---
+langchain-core>=0.3
+langchain-openai>=0.2
+langchain-anthropic>=0.3
