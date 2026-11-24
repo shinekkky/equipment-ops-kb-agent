@@ -4,6 +4,15 @@ from . import prompts
 from .llm import build_llm, friendly_error, provider_names
 from .runtime import AgentRun, ToolCall, answer_question, generate_narrative, run_tool_loop
 from .tools import AgentContext, build_tools
+from .trace_store import (
+    append_trace,
+    export_trace,
+    iter_traces,
+    list_traces,
+    load_trace,
+    trace_path,
+    trace_stats,
+)
 
 __all__ = [
     "prompts",
@@ -17,4 +26,11 @@ __all__ = [
     "run_tool_loop",
     "generate_narrative",
     "answer_question",
+    "append_trace",
+    "export_trace",
+    "iter_traces",
+    "list_traces",
+    "load_trace",
+    "trace_path",
+    "trace_stats",
 ]

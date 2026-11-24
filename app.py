@@ -14,6 +14,7 @@ Markdown/PDF 导出全部是确定性计算，模型只负责综合分析与自�
 from __future__ import annotations
 
 import hashlib
+import json
 from datetime import datetime
 from pathlib import Path
 
@@ -27,6 +28,7 @@ from core.config import (
     REPORT_OUT_DIR,
     RETRIEVAL_MODES,
     TOP_K_DEFAULT,
+    TRACE_LOG_PATH,
     UPLOAD_DIR,
     python_version_note,
 )
@@ -323,7 +325,10 @@ def run_scan():
         st.session_state.scan_sig = scan_signature()
         # 数据或检索条件变了，之前生成的综合分析/PDF 就不能再代表本次结果。
         st.session_state.pop("narrative", None)
+        st.session_state.pop("narrative_trace", None)
         st.session_state.pop("pdf_bytes", None)
+        # 问答历史依赖本次诊断结果，重算后清空，避免旧回答被误当成当前结论。
+        st.session_state.chat = []
 
 
 if st.session_state.get("scan_sig") != scan_signature():
@@ -381,12 +386,15 @@ def render_overview():
 
     st.markdown("##### 设备健康与处置优先级")
     health = pd.DataFrame(result.device_summary())
-    health["处置优先级"] = health["最高严重度"].map(PRIORITY_BY_SEVERITY)
-    health["建议动作"] = health["最高严重度"].map(ACTION_BY_SEVERITY)
-    health = health.rename(columns={"最高严重度": "风险等级", "问题数": "异常数", "已越限": "已越限条数"})
-    health_cols = ["设备ID", "设备名称", "设备类型", "安装位置", "责任人",
-                   "风险等级", "异常数", "已越限条数", "处置优先级", "建议动作"]
-    st.dataframe(health[health_cols], width="stretch", hide_index=True)
+    if health.empty:
+        st.info("未读取到设备台账，暂时无法生成设备健康表。")
+    else:
+        health["处置优先级"] = health["最高严重度"].map(PRIORITY_BY_SEVERITY)
+        health["建议动作"] = health["最高严重度"].map(ACTION_BY_SEVERITY)
+        health = health.rename(columns={"最高严重度": "风险等级", "问题数": "异常数", "已越限": "已越限条数"})
+        health_cols = ["设备ID", "设备名称", "设备类型", "安装位置", "责任人",
+                       "风险等级", "异常数", "已越限条数", "处置优先级", "建议动作"]
+        st.dataframe(health[health_cols], width="stretch", hide_index=True)
 
     st.markdown("##### 角色工作台")
     role_cols = st.columns(3)
@@ -588,7 +596,20 @@ def render_diagnosis():
                 with st.chat_message(message["role"]):
                     st.markdown(message["content"])
                     for call in message.get("tools", []):
-                        st.caption(f"🔧 调用 `{call.name}`（{call.args_text}）")
+                        mark = "✅" if call.status == "success" else "❌"
+                        st.caption(
+                            f"{mark} 调用 `{call.name}`（{call.args_text}）"
+                            f" · {call.duration_ms} ms"
+                        )
+                    trace = message.get("trace")
+                    if trace:
+                        st.caption(
+                            f"trace `{trace['trace_id'][:8]}…` · "
+                            f"{trace['rounds']} 轮 · {trace['tool_call_count']} 次工具调用 · "
+                            f"{trace['duration_ms']} ms"
+                            + (f" · {trace['total_tokens']} tokens"
+                               if trace.get("total_tokens") else "")
+                        )
 
         question = st.chat_input("请输入设备或手册问题…", disabled=not (api_key and model_name),
                                  key="diag_chat")
@@ -607,11 +628,40 @@ def render_diagnosis():
                         run = answer_question(ctx, llm, question)
                         st.markdown(run.text)
                         for call in run.tool_calls:
-                            st.caption(f"🔧 调用 `{call.name}`（{call.args_text}）")
+                            mark = "✅" if call.status == "success" else "❌"
+                            st.caption(
+                                f"{mark} 调用 `{call.name}`（{call.args_text}）"
+                                f" · {call.duration_ms} ms"
+                            )
+                        trace = run.to_dict()
                         st.session_state.chat.append({
                             "role": "assistant", "content": run.text,
-                            "tools": run.tool_calls,
+                            "tools": run.tool_calls, "trace": trace,
                         })
+                        st.caption(
+                            f"trace `{run.trace_id[:8]}…` · {run.rounds} 轮 · "
+                            f"{run.tool_call_count} 次工具调用 · {run.duration_ms} ms"
+                            + (f" · {run.total_tokens} tokens" if run.total_tokens else "")
+                        )
+                        with st.expander("查看执行轨迹"):
+                            st.dataframe(pd.DataFrame([{
+                                "step": c.step,
+                                "工具": c.name,
+                                "参数": c.args_text,
+                                "状态": c.status,
+                                "耗时(ms)": c.duration_ms,
+                                "错误": c.error or "",
+                            } for c in run.tool_calls]), width="stretch",
+                                hide_index=True)
+                            st.json(trace, expanded=False)
+                            st.download_button(
+                                "⬇️ 下载本次执行记录",
+                                data=json.dumps(trace, ensure_ascii=False, indent=2),
+                                file_name=f"trace_{run.trace_id}.json",
+                                mime="application/json",
+                                key=f"dl_trace_{run.trace_id}",
+                            )
+                            st.caption(f"执行记录同时追加写入 `{TRACE_LOG_PATH}`。")
                     except Exception as exc:
                         st.error(f"回答失败：{friendly_error(exc)}")
 
@@ -650,7 +700,8 @@ def render_report():
     col_gen, col_clear = st.columns([1, 3])
     want_narrative = col_gen.button("生成模型综合分析", type="primary")
     if col_clear.button("清除已生成的分析") and "narrative" in st.session_state:
-        del st.session_state["narrative"]
+        st.session_state.pop("narrative", None)
+        st.session_state.pop("narrative_trace", None)
 
     if want_narrative:
         if not api_key or not model_name:
@@ -664,6 +715,7 @@ def render_report():
                                        retrieval_mode=retrieval_mode, top_k=top_k)
                     run = generate_narrative(ctx, llm)
                     st.session_state["narrative"] = run.text
+                    st.session_state["narrative_trace"] = run.to_dict()
                 except Exception as exc:
                     st.error(f"生成失败：{friendly_error(exc)}")
 
@@ -675,6 +727,14 @@ def render_report():
     if narrative:
         st.markdown("#### 模型综合分析")
         st.markdown(narrative)
+        narrative_trace = st.session_state.get("narrative_trace")
+        if narrative_trace:
+            st.caption(
+                f"trace `{narrative_trace['trace_id'][:8]}…` · "
+                f"{narrative_trace['duration_ms']} ms"
+                + (f" · {narrative_trace['total_tokens']} tokens"
+                   if narrative_trace.get("total_tokens") else "")
+            )
 
     st.markdown("#### 报告预览")
     with st.container(height=460, border=True):

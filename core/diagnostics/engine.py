@@ -231,8 +231,13 @@ def scan(
     registry: pd.DataFrame | None = None,
     *,
     data_path: Path | str | None = None,
+    layers: set[str] | frozenset[str] | None = None,
 ) -> ScanResult:
-    """跑一次全量诊断。不传参数则读取 data/ 下的内置数据。"""
+    """跑一次全量诊断。不传参数则读取 data/ 下的内置数据。
+
+    layers 用于评测消融：None 跑满四层，传入单层集合则只跑该层，
+    合并、故障码关联等后处理保持完全一致。
+    """
     resolved = Path(data_path) if data_path else SENSOR_CSV
     df = load_sensor_data(resolved) if data is None else data
     reg = load_registry() if registry is None else registry
@@ -244,7 +249,7 @@ def scan(
         if sub.empty:
             continue
         sub = sub.sort_values("时间").reset_index(drop=True)
-        raw = detect_device(sub, device.to_dict())
+        raw = detect_device(sub, device.to_dict(), layers=layers)
         if not raw:
             continue
 

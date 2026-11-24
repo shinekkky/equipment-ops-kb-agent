@@ -24,7 +24,8 @@ from langchain_text_splitters import MarkdownHeaderTextSplitter, RecursiveCharac
 
 # 子块目标尺寸（字符数）。中文约 1 字符 ≈ 1 token。
 # 250 是 scripts/eval_retrieval.py 在 27 条评测集上扫出来的：混合检索
-# MRR 0.881、Hit@5 100%，优于 150/200/300/450/900 各档。注意块打包器
+# MRR 0.887、Hit@5 100%，优于 150/200/300/450/900 各档。该结论对应的
+# 可复现结果见 experiments/results/retrieval_eval.json。注意块打包器
 # 不会切开单个块，所以表格与完整段落不会被这 250 字的预算切碎。
 CHILD_SIZE = 250
 CHILD_OVERLAP = 40

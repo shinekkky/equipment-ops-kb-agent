@@ -1,0 +1,1511 @@
+{
+  "config": {
+    "generated_at": "2026-11-24T11:37:19+08:00",
+    "python": "3.12.2",
+    "platform": "Windows-11-10.0.22621-SP0",
+    "git_commit": "888c0daf1e3b37a0a3b9cf6add681b51f00a6dff",
+    "data": {
+      "sensor_csv": "设备传感器时序数据.csv",
+      "sensor_sha256": "440cedd510c86a97276ac52cb62c41147984e5e7d19a3ddaedbf85f2c46181f1",
+      "registry_csv": "设备台账.csv",
+      "registry_sha256": "01331c16dd1c37ea87317205e41898192206b8e2bdaf308d75d4ed4704bf164d",
+      "ground_truth_sha256": "0c025c693cdf6d00407524c171e0e77f18d201ab4d1dd6205d4858ff32cbddf0",
+      "n_events": 6
+    },
+    "detector_params": {
+      "baseline_days": 10,
+      "z_window_hours": 168,
+      "z_threshold": 3.5,
+      "trend_window_hours": 120,
+      "trend_min_sigma_per_day": 0.25,
+      "trend_min_net_sigma": 1.0,
+      "mv_min_joint_z": 2.0,
+      "event_max_gap_hours": 12,
+      "match_tolerance": "min(24h, max(2h, event_duration))"
+    },
+    "methods": [
+      "阈值检测",
+      "滚动 Z-score",
+      "趋势检测",
+      "多变量检测",
+      "四层组合"
+    ]
+  },
+  "summary": {
+    "阈值检测": {
+      "n_findings": 9,
+      "finding_precision": 0.6666666666666666,
+      "finding_recall": 0.46153846153846156,
+      "finding_f1": 0.5454545454545455,
+      "point_precision": 0.9777158774373259,
+      "point_recall": 0.1588235294117647,
+      "point_f1": 0.27325807707279093,
+      "event_recall": 0.6666666666666666,
+      "full_event_recall": 0.6666666666666666,
+      "primary_metric_recall": 0.6666666666666666,
+      "detected_events": 4,
+      "fully_detected_events": 4
+    },
+    "滚动 Z-score": {
+      "n_findings": 13,
+      "finding_precision": 0.6153846153846154,
+      "finding_recall": 0.6153846153846154,
+      "finding_f1": 0.6153846153846154,
+      "point_precision": 0.9424083769633508,
+      "point_recall": 0.08144796380090498,
+      "point_f1": 0.1499375260308205,
+      "event_recall": 0.8333333333333334,
+      "full_event_recall": 0.6666666666666666,
+      "primary_metric_recall": 0.7222222222222222,
+      "detected_events": 5,
+      "fully_detected_events": 4
+    },
+    "趋势检测": {
+      "n_findings": 6,
+      "finding_precision": 1.0,
+      "finding_recall": 0.46153846153846156,
+      "finding_f1": 0.631578947368421,
+      "point_precision": 0.9323308270676691,
+      "point_recall": 0.28054298642533937,
+      "point_f1": 0.4313043478260869,
+      "event_recall": 0.6666666666666666,
+      "full_event_recall": 0.6666666666666666,
+      "primary_metric_recall": 0.6666666666666666,
+      "detected_events": 4,
+      "fully_detected_events": 4
+    },
+    "多变量检测": {
+      "n_findings": 1,
+      "finding_precision": 1.0,
+      "finding_recall": 0.23076923076923078,
+      "finding_f1": 0.375,
+      "point_precision": 1.0,
+      "point_recall": 0.08687782805429864,
+      "point_f1": 0.15986677768526228,
+      "event_recall": 0.16666666666666666,
+      "full_event_recall": 0.16666666666666666,
+      "primary_metric_recall": 0.16666666666666666,
+      "detected_events": 1,
+      "fully_detected_events": 1
+    },
+    "四层组合": {
+      "n_findings": 15,
+      "finding_precision": 0.6666666666666666,
+      "finding_recall": 0.8461538461538461,
+      "finding_f1": 0.7457627118644068,
+      "point_precision": 0.9301801801801802,
+      "point_recall": 0.3737556561085973,
+      "point_f1": 0.5332472562943835,
+      "event_recall": 1.0,
+      "full_event_recall": 1.0,
+      "primary_metric_recall": 1.0,
+      "detected_events": 6,
+      "fully_detected_events": 6
+    }
+  },
+  "methods": {
+    "阈值检测": {
+      "n_findings": 9,
+      "finding": {
+        "n_findings": 9,
+        "tp_findings": 6,
+        "fp_findings": 3,
+        "gt_items": 13,
+        "matched_items": 6,
+        "missed_items": 7,
+        "precision": 0.6666666666666666,
+        "recall": 0.46153846153846156,
+        "f1": 0.5454545454545455,
+        "duplicate_items": {}
+      },
+      "point": {
+        "tp": 351,
+        "fp": 8,
+        "fn": 1859,
+        "tn": 20102,
+        "precision": 0.9777158774373259,
+        "recall": 0.1588235294117647,
+        "f1": 0.27325807707279093,
+        "positive_rate": 0.09901433691756273,
+        "per_metric": {
+          "温度_℃": {
+            "tp": 102,
+            "fp": 0,
+            "fn": 633,
+            "tn": 4305
+          },
+          "振动_mm_s": {
+            "tp": 67,
+            "fp": 3,
+            "fn": 712,
+            "tn": 2818
+          },
+          "转速_rpm": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3600
+          },
+          "电流_A": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 336,
+            "tn": 3264
+          },
+          "压力_MPa": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 0,
+            "tn": 2157
+          },
+          "CPU利用率_%": {
+            "tp": 70,
+            "fp": 1,
+            "fn": 50,
+            "tn": 1319
+          },
+          "内存利用率_%": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 120,
+            "tn": 1319
+          },
+          "端口丢包率_%": {
+            "tp": 112,
+            "fp": 0,
+            "fn": 8,
+            "tn": 1320
+          }
+        }
+      },
+      "events": {
+        "n_events": 6,
+        "detected_events": 4,
+        "fully_detected_events": 4,
+        "event_recall": 0.6666666666666666,
+        "full_event_recall": 0.6666666666666666,
+        "primary_metric_recall": 0.6666666666666666,
+        "rows": [
+          {
+            "event_id": "E01",
+            "device_id": "P-101",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-21 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-27 03:00",
+            "detection_lag_hours": 147.0
+          },
+          {
+            "event_id": "E02",
+            "device_id": "P-102",
+            "fault_type": "突发尖峰",
+            "start": "2026-03-16 06:00",
+            "end": "2026-03-16 16:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-16 07:00",
+            "detection_lag_hours": 1.0
+          },
+          {
+            "event_id": "E03",
+            "device_id": "P-103",
+            "fault_type": "短时尖峰（未越限）",
+            "start": "2026-03-13 10:00",
+            "end": "2026-03-13 13:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E04",
+            "device_id": "M-201",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-23 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "振动_mm_s"
+            ],
+            "metric_found": {
+              "振动_mm_s": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-28 11:00",
+            "detection_lag_hours": 131.0
+          },
+          {
+            "event_id": "E05",
+            "device_id": "M-202",
+            "fault_type": "多变量隐性漂移",
+            "start": "2026-03-17 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃",
+              "振动_mm_s",
+              "电流_A"
+            ],
+            "metric_found": {
+              "温度_℃": false,
+              "振动_mm_s": false,
+              "电流_A": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E06",
+            "device_id": "SW-01",
+            "fault_type": "资源耗尽趋势",
+            "start": "2026-03-26 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "CPU利用率_%",
+              "端口丢包率_%"
+            ],
+            "metric_found": {
+              "CPU利用率_%": true,
+              "端口丢包率_%": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-26 08:00",
+            "detection_lag_hours": 8.0
+          }
+        ]
+      },
+      "by_fault_type": {
+        "缓慢趋势劣化": {
+          "n_events": 2,
+          "detected": 2,
+          "fully_detected": 2,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 139.0
+        },
+        "突发尖峰": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 1.0
+        },
+        "短时尖峰（未越限）": {
+          "n_events": 1,
+          "detected": 0,
+          "fully_detected": 0,
+          "event_recall": 0.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": null
+        },
+        "多变量隐性漂移": {
+          "n_events": 1,
+          "detected": 0,
+          "fully_detected": 0,
+          "event_recall": 0.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": null
+        },
+        "资源耗尽趋势": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 8.0
+        }
+      }
+    },
+    "滚动 Z-score": {
+      "n_findings": 13,
+      "finding": {
+        "n_findings": 13,
+        "tp_findings": 8,
+        "fp_findings": 5,
+        "gt_items": 13,
+        "matched_items": 8,
+        "missed_items": 5,
+        "precision": 0.6153846153846154,
+        "recall": 0.6153846153846154,
+        "f1": 0.6153846153846154,
+        "duplicate_items": {}
+      },
+      "point": {
+        "tp": 180,
+        "fp": 11,
+        "fn": 2030,
+        "tn": 20099,
+        "precision": 0.9424083769633508,
+        "recall": 0.08144796380090498,
+        "f1": 0.1499375260308205,
+        "positive_rate": 0.09901433691756273,
+        "per_metric": {
+          "温度_℃": {
+            "tp": 12,
+            "fp": 1,
+            "fn": 723,
+            "tn": 4304
+          },
+          "振动_mm_s": {
+            "tp": 63,
+            "fp": 3,
+            "fn": 716,
+            "tn": 2818
+          },
+          "转速_rpm": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3600
+          },
+          "电流_A": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 336,
+            "tn": 3263
+          },
+          "压力_MPa": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0,
+            "tn": 2158
+          },
+          "CPU利用率_%": {
+            "tp": 10,
+            "fp": 3,
+            "fn": 110,
+            "tn": 1317
+          },
+          "内存利用率_%": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 120,
+            "tn": 1319
+          },
+          "端口丢包率_%": {
+            "tp": 95,
+            "fp": 0,
+            "fn": 25,
+            "tn": 1320
+          }
+        }
+      },
+      "events": {
+        "n_events": 6,
+        "detected_events": 5,
+        "fully_detected_events": 4,
+        "event_recall": 0.8333333333333334,
+        "full_event_recall": 0.6666666666666666,
+        "primary_metric_recall": 0.7222222222222222,
+        "rows": [
+          {
+            "event_id": "E01",
+            "device_id": "P-101",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-21 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E02",
+            "device_id": "P-102",
+            "fault_type": "突发尖峰",
+            "start": "2026-03-16 06:00",
+            "end": "2026-03-16 16:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-16 06:00",
+            "detection_lag_hours": 0.0
+          },
+          {
+            "event_id": "E03",
+            "device_id": "P-103",
+            "fault_type": "短时尖峰（未越限）",
+            "start": "2026-03-13 10:00",
+            "end": "2026-03-13 13:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-13 12:00",
+            "detection_lag_hours": 2.0
+          },
+          {
+            "event_id": "E04",
+            "device_id": "M-201",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-23 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "振动_mm_s"
+            ],
+            "metric_found": {
+              "振动_mm_s": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-24 04:00",
+            "detection_lag_hours": 28.0
+          },
+          {
+            "event_id": "E05",
+            "device_id": "M-202",
+            "fault_type": "多变量隐性漂移",
+            "start": "2026-03-17 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃",
+              "振动_mm_s",
+              "电流_A"
+            ],
+            "metric_found": {
+              "温度_℃": true,
+              "振动_mm_s": false,
+              "电流_A": false
+            },
+            "detected": true,
+            "fully_detected": false,
+            "primary_metric_recall": 0.3333333333333333,
+            "first_detection": "2026-03-25 06:00",
+            "detection_lag_hours": 198.0
+          },
+          {
+            "event_id": "E06",
+            "device_id": "SW-01",
+            "fault_type": "资源耗尽趋势",
+            "start": "2026-03-26 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "CPU利用率_%",
+              "端口丢包率_%"
+            ],
+            "metric_found": {
+              "CPU利用率_%": true,
+              "端口丢包率_%": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-26 05:00",
+            "detection_lag_hours": 5.0
+          }
+        ]
+      },
+      "by_fault_type": {
+        "缓慢趋势劣化": {
+          "n_events": 2,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 0.5,
+          "full_event_recall": 0.5,
+          "mean_detection_lag_hours": 28.0
+        },
+        "突发尖峰": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 0.0
+        },
+        "短时尖峰（未越限）": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 2.0
+        },
+        "多变量隐性漂移": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 0,
+          "event_recall": 1.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": 198.0
+        },
+        "资源耗尽趋势": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 5.0
+        }
+      }
+    },
+    "趋势检测": {
+      "n_findings": 6,
+      "finding": {
+        "n_findings": 6,
+        "tp_findings": 6,
+        "fp_findings": 0,
+        "gt_items": 13,
+        "matched_items": 6,
+        "missed_items": 7,
+        "precision": 1.0,
+        "recall": 0.46153846153846156,
+        "f1": 0.631578947368421,
+        "duplicate_items": {}
+      },
+      "point": {
+        "tp": 620,
+        "fp": 45,
+        "fn": 1590,
+        "tn": 20065,
+        "precision": 0.9323308270676691,
+        "recall": 0.28054298642533937,
+        "f1": 0.4313043478260869,
+        "positive_rate": 0.09901433691756273,
+        "per_metric": {
+          "温度_℃": {
+            "tp": 205,
+            "fp": 45,
+            "fn": 530,
+            "tn": 4260
+          },
+          "振动_mm_s": {
+            "tp": 218,
+            "fp": 0,
+            "fn": 561,
+            "tn": 2821
+          },
+          "转速_rpm": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3600
+          },
+          "电流_A": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 336,
+            "tn": 3264
+          },
+          "压力_MPa": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 2160
+          },
+          "CPU利用率_%": {
+            "tp": 85,
+            "fp": 0,
+            "fn": 35,
+            "tn": 1320
+          },
+          "内存利用率_%": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 120,
+            "tn": 1320
+          },
+          "端口丢包率_%": {
+            "tp": 112,
+            "fp": 0,
+            "fn": 8,
+            "tn": 1320
+          }
+        }
+      },
+      "events": {
+        "n_events": 6,
+        "detected_events": 4,
+        "fully_detected_events": 4,
+        "event_recall": 0.6666666666666666,
+        "full_event_recall": 0.6666666666666666,
+        "primary_metric_recall": 0.6666666666666666,
+        "rows": [
+          {
+            "event_id": "E01",
+            "device_id": "P-101",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-21 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-22 20:00",
+            "detection_lag_hours": 44.0
+          },
+          {
+            "event_id": "E02",
+            "device_id": "P-102",
+            "fault_type": "突发尖峰",
+            "start": "2026-03-16 06:00",
+            "end": "2026-03-16 16:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-16 08:00",
+            "detection_lag_hours": 2.0
+          },
+          {
+            "event_id": "E03",
+            "device_id": "P-103",
+            "fault_type": "短时尖峰（未越限）",
+            "start": "2026-03-13 10:00",
+            "end": "2026-03-13 13:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E04",
+            "device_id": "M-201",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-23 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "振动_mm_s"
+            ],
+            "metric_found": {
+              "振动_mm_s": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-24 04:00",
+            "detection_lag_hours": 28.0
+          },
+          {
+            "event_id": "E05",
+            "device_id": "M-202",
+            "fault_type": "多变量隐性漂移",
+            "start": "2026-03-17 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃",
+              "振动_mm_s",
+              "电流_A"
+            ],
+            "metric_found": {
+              "温度_℃": false,
+              "振动_mm_s": false,
+              "电流_A": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E06",
+            "device_id": "SW-01",
+            "fault_type": "资源耗尽趋势",
+            "start": "2026-03-26 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "CPU利用率_%",
+              "端口丢包率_%"
+            ],
+            "metric_found": {
+              "CPU利用率_%": true,
+              "端口丢包率_%": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-26 08:00",
+            "detection_lag_hours": 8.0
+          }
+        ]
+      },
+      "by_fault_type": {
+        "缓慢趋势劣化": {
+          "n_events": 2,
+          "detected": 2,
+          "fully_detected": 2,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 36.0
+        },
+        "突发尖峰": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 2.0
+        },
+        "短时尖峰（未越限）": {
+          "n_events": 1,
+          "detected": 0,
+          "fully_detected": 0,
+          "event_recall": 0.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": null
+        },
+        "多变量隐性漂移": {
+          "n_events": 1,
+          "detected": 0,
+          "fully_detected": 0,
+          "event_recall": 0.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": null
+        },
+        "资源耗尽趋势": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 8.0
+        }
+      }
+    },
+    "多变量检测": {
+      "n_findings": 1,
+      "finding": {
+        "n_findings": 1,
+        "tp_findings": 1,
+        "fp_findings": 0,
+        "gt_items": 13,
+        "matched_items": 3,
+        "missed_items": 10,
+        "precision": 1.0,
+        "recall": 0.23076923076923078,
+        "f1": 0.375,
+        "duplicate_items": {}
+      },
+      "point": {
+        "tp": 192,
+        "fp": 0,
+        "fn": 2018,
+        "tn": 20110,
+        "precision": 1.0,
+        "recall": 0.08687782805429864,
+        "f1": 0.15986677768526228,
+        "positive_rate": 0.09901433691756273,
+        "per_metric": {
+          "温度_℃": {
+            "tp": 64,
+            "fp": 0,
+            "fn": 671,
+            "tn": 4305
+          },
+          "振动_mm_s": {
+            "tp": 64,
+            "fp": 0,
+            "fn": 715,
+            "tn": 2821
+          },
+          "转速_rpm": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3600
+          },
+          "电流_A": {
+            "tp": 64,
+            "fp": 0,
+            "fn": 272,
+            "tn": 3264
+          },
+          "压力_MPa": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 2160
+          },
+          "CPU利用率_%": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 120,
+            "tn": 1320
+          },
+          "内存利用率_%": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 120,
+            "tn": 1320
+          },
+          "端口丢包率_%": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 120,
+            "tn": 1320
+          }
+        }
+      },
+      "events": {
+        "n_events": 6,
+        "detected_events": 1,
+        "fully_detected_events": 1,
+        "event_recall": 0.16666666666666666,
+        "full_event_recall": 0.16666666666666666,
+        "primary_metric_recall": 0.16666666666666666,
+        "rows": [
+          {
+            "event_id": "E01",
+            "device_id": "P-101",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-21 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E02",
+            "device_id": "P-102",
+            "fault_type": "突发尖峰",
+            "start": "2026-03-16 06:00",
+            "end": "2026-03-16 16:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E03",
+            "device_id": "P-103",
+            "fault_type": "短时尖峰（未越限）",
+            "start": "2026-03-13 10:00",
+            "end": "2026-03-13 13:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E04",
+            "device_id": "M-201",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-23 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "振动_mm_s"
+            ],
+            "metric_found": {
+              "振动_mm_s": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          },
+          {
+            "event_id": "E05",
+            "device_id": "M-202",
+            "fault_type": "多变量隐性漂移",
+            "start": "2026-03-17 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃",
+              "振动_mm_s",
+              "电流_A"
+            ],
+            "metric_found": {
+              "温度_℃": true,
+              "振动_mm_s": true,
+              "电流_A": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-28 08:00",
+            "detection_lag_hours": 272.0
+          },
+          {
+            "event_id": "E06",
+            "device_id": "SW-01",
+            "fault_type": "资源耗尽趋势",
+            "start": "2026-03-26 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "CPU利用率_%",
+              "端口丢包率_%"
+            ],
+            "metric_found": {
+              "CPU利用率_%": false,
+              "端口丢包率_%": false
+            },
+            "detected": false,
+            "fully_detected": false,
+            "primary_metric_recall": 0.0,
+            "first_detection": null,
+            "detection_lag_hours": null
+          }
+        ]
+      },
+      "by_fault_type": {
+        "缓慢趋势劣化": {
+          "n_events": 2,
+          "detected": 0,
+          "fully_detected": 0,
+          "event_recall": 0.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": null
+        },
+        "突发尖峰": {
+          "n_events": 1,
+          "detected": 0,
+          "fully_detected": 0,
+          "event_recall": 0.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": null
+        },
+        "短时尖峰（未越限）": {
+          "n_events": 1,
+          "detected": 0,
+          "fully_detected": 0,
+          "event_recall": 0.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": null
+        },
+        "多变量隐性漂移": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 272.0
+        },
+        "资源耗尽趋势": {
+          "n_events": 1,
+          "detected": 0,
+          "fully_detected": 0,
+          "event_recall": 0.0,
+          "full_event_recall": 0.0,
+          "mean_detection_lag_hours": null
+        }
+      }
+    },
+    "四层组合": {
+      "n_findings": 15,
+      "finding": {
+        "n_findings": 15,
+        "tp_findings": 10,
+        "fp_findings": 5,
+        "gt_items": 13,
+        "matched_items": 11,
+        "missed_items": 2,
+        "precision": 0.6666666666666666,
+        "recall": 0.8461538461538461,
+        "f1": 0.7457627118644068,
+        "duplicate_items": {
+          "E05:温度_℃": 2
+        }
+      },
+      "point": {
+        "tp": 826,
+        "fp": 62,
+        "fn": 1384,
+        "tn": 20048,
+        "precision": 0.9301801801801802,
+        "recall": 0.3737556561085973,
+        "f1": 0.5332472562943835,
+        "positive_rate": 0.09901433691756273,
+        "per_metric": {
+          "温度_℃": {
+            "tp": 273,
+            "fp": 46,
+            "fn": 462,
+            "tn": 4259
+          },
+          "振动_mm_s": {
+            "tp": 289,
+            "fp": 5,
+            "fn": 490,
+            "tn": 2816
+          },
+          "转速_rpm": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3600
+          },
+          "电流_A": {
+            "tp": 64,
+            "fp": 1,
+            "fn": 272,
+            "tn": 3263
+          },
+          "压力_MPa": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 0,
+            "tn": 2156
+          },
+          "CPU利用率_%": {
+            "tp": 85,
+            "fp": 4,
+            "fn": 35,
+            "tn": 1316
+          },
+          "内存利用率_%": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 120,
+            "tn": 1318
+          },
+          "端口丢包率_%": {
+            "tp": 115,
+            "fp": 0,
+            "fn": 5,
+            "tn": 1320
+          }
+        }
+      },
+      "events": {
+        "n_events": 6,
+        "detected_events": 6,
+        "fully_detected_events": 6,
+        "event_recall": 1.0,
+        "full_event_recall": 1.0,
+        "primary_metric_recall": 1.0,
+        "rows": [
+          {
+            "event_id": "E01",
+            "device_id": "P-101",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-21 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-22 20:00",
+            "detection_lag_hours": 44.0
+          },
+          {
+            "event_id": "E02",
+            "device_id": "P-102",
+            "fault_type": "突发尖峰",
+            "start": "2026-03-16 06:00",
+            "end": "2026-03-16 16:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-16 06:00",
+            "detection_lag_hours": 0.0
+          },
+          {
+            "event_id": "E03",
+            "device_id": "P-103",
+            "fault_type": "短时尖峰（未越限）",
+            "start": "2026-03-13 10:00",
+            "end": "2026-03-13 13:00",
+            "primary_metrics": [
+              "温度_℃"
+            ],
+            "metric_found": {
+              "温度_℃": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-13 12:00",
+            "detection_lag_hours": 2.0
+          },
+          {
+            "event_id": "E04",
+            "device_id": "M-201",
+            "fault_type": "缓慢趋势劣化",
+            "start": "2026-03-23 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "振动_mm_s"
+            ],
+            "metric_found": {
+              "振动_mm_s": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-24 04:00",
+            "detection_lag_hours": 28.0
+          },
+          {
+            "event_id": "E05",
+            "device_id": "M-202",
+            "fault_type": "多变量隐性漂移",
+            "start": "2026-03-17 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "温度_℃",
+              "振动_mm_s",
+              "电流_A"
+            ],
+            "metric_found": {
+              "温度_℃": true,
+              "振动_mm_s": true,
+              "电流_A": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-25 06:00",
+            "detection_lag_hours": 198.0
+          },
+          {
+            "event_id": "E06",
+            "device_id": "SW-01",
+            "fault_type": "资源耗尽趋势",
+            "start": "2026-03-26 00:00",
+            "end": "2026-03-30 23:00",
+            "primary_metrics": [
+              "CPU利用率_%",
+              "端口丢包率_%"
+            ],
+            "metric_found": {
+              "CPU利用率_%": true,
+              "端口丢包率_%": true
+            },
+            "detected": true,
+            "fully_detected": true,
+            "primary_metric_recall": 1.0,
+            "first_detection": "2026-03-26 05:00",
+            "detection_lag_hours": 5.0
+          }
+        ]
+      },
+      "by_fault_type": {
+        "缓慢趋势劣化": {
+          "n_events": 2,
+          "detected": 2,
+          "fully_detected": 2,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 36.0
+        },
+        "突发尖峰": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 0.0
+        },
+        "短时尖峰（未越限）": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 2.0
+        },
+        "多变量隐性漂移": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 198.0
+        },
+        "资源耗尽趋势": {
+          "n_events": 1,
+          "detected": 1,
+          "fully_detected": 1,
+          "event_recall": 1.0,
+          "full_event_recall": 1.0,
+          "mean_detection_lag_hours": 5.0
+        }
+      }
+    }
+  },
+  "added": {
+    "added_findings": 6,
+    "validated_by_ground_truth": 4,
+    "unvalidated": 2,
+    "items": [
+      {
+        "device_id": "M-202",
+        "metric": "振动_mm_s+温度_℃+电流_A",
+        "start": "2026-03-28 08:00",
+        "end": "2026-03-30 23:00",
+        "layers": [
+          "多变量联合"
+        ],
+        "validated": true
+      },
+      {
+        "device_id": "M-202",
+        "metric": "温度_℃",
+        "start": "2026-03-25 06:00",
+        "end": "2026-03-25 06:00",
+        "layers": [
+          "滚动 Z-score"
+        ],
+        "validated": true
+      },
+      {
+        "device_id": "P-101",
+        "metric": "压力_MPa",
+        "start": "2026-03-10 13:00",
+        "end": "2026-03-10 13:00",
+        "layers": [
+          "滚动 Z-score"
+        ],
+        "validated": false
+      },
+      {
+        "device_id": "P-101",
+        "metric": "振动_mm_s",
+        "start": "2026-03-08 08:00",
+        "end": "2026-03-30 06:00",
+        "layers": [
+          "滚动 Z-score",
+          "趋势劣化"
+        ],
+        "validated": true
+      },
+      {
+        "device_id": "P-102",
+        "metric": "电流_A",
+        "start": "2026-03-28 10:00",
+        "end": "2026-03-28 10:00",
+        "layers": [
+          "滚动 Z-score"
+        ],
+        "validated": false
+      },
+      {
+        "device_id": "P-103",
+        "metric": "温度_℃",
+        "start": "2026-03-13 12:00",
+        "end": "2026-03-13 12:00",
+        "layers": [
+          "滚动 Z-score"
+        ],
+        "validated": true
+      }
+    ]
+  },
+  "lead_times": {
+    "rows": [
+      {
+        "event_id": "E01",
+        "device_id": "P-101",
+        "metric": "温度_℃",
+        "four_layer_first": "2026-03-22 20:00",
+        "threshold_first": "2026-03-27 03:00",
+        "lead_hours": 103.0,
+        "note": ""
+      },
+      {
+        "event_id": "E02",
+        "device_id": "P-102",
+        "metric": "温度_℃",
+        "four_layer_first": "2026-03-16 06:00",
+        "threshold_first": "2026-03-16 07:00",
+        "lead_hours": 1.0,
+        "note": ""
+      },
+      {
+        "event_id": "E03",
+        "device_id": "P-103",
+        "metric": "温度_℃",
+        "four_layer_first": "2026-03-13 12:00",
+        "threshold_first": null,
+        "lead_hours": null,
+        "note": "阈值层漏报，提前量无定义"
+      },
+      {
+        "event_id": "E04",
+        "device_id": "M-201",
+        "metric": "振动_mm_s",
+        "four_layer_first": "2026-03-24 04:00",
+        "threshold_first": "2026-03-28 11:00",
+        "lead_hours": 103.0,
+        "note": ""
+      },
+      {
+        "event_id": "E05",
+        "device_id": "M-202",
+        "metric": "温度_℃",
+        "four_layer_first": "2026-03-25 06:00",
+        "threshold_first": null,
+        "lead_hours": null,
+        "note": "阈值层漏报，提前量无定义"
+      },
+      {
+        "event_id": "E05",
+        "device_id": "M-202",
+        "metric": "振动_mm_s",
+        "four_layer_first": "2026-03-28 08:00",
+        "threshold_first": null,
+        "lead_hours": null,
+        "note": "阈值层漏报，提前量无定义"
+      },
+      {
+        "event_id": "E05",
+        "device_id": "M-202",
+        "metric": "电流_A",
+        "four_layer_first": "2026-03-28 08:00",
+        "threshold_first": null,
+        "lead_hours": null,
+        "note": "阈值层漏报，提前量无定义"
+      },
+      {
+        "event_id": "E06",
+        "device_id": "SW-01",
+        "metric": "CPU利用率_%",
+        "four_layer_first": "2026-03-27 11:00",
+        "threshold_first": "2026-03-28 02:00",
+        "lead_hours": 15.0,
+        "note": ""
+      },
+      {
+        "event_id": "E06",
+        "device_id": "SW-01",
+        "metric": "端口丢包率_%",
+        "four_layer_first": "2026-03-26 05:00",
+        "threshold_first": "2026-03-26 08:00",
+        "lead_hours": 3.0,
+        "note": ""
+      }
+    ],
+    "threshold_missed_items": [
+      {
+        "event_id": "E03",
+        "device_id": "P-103",
+        "metric": "温度_℃",
+        "four_layer_first": "2026-03-13 12:00",
+        "threshold_first": null,
+        "lead_hours": null,
+        "note": "阈值层漏报，提前量无定义"
+      },
+      {
+        "event_id": "E05",
+        "device_id": "M-202",
+        "metric": "温度_℃",
+        "four_layer_first": "2026-03-25 06:00",
+        "threshold_first": null,
+        "lead_hours": null,
+        "note": "阈值层漏报，提前量无定义"
+      },
+      {
+        "event_id": "E05",
+        "device_id": "M-202",
+        "metric": "振动_mm_s",
+        "four_layer_first": "2026-03-28 08:00",
+        "threshold_first": null,
+        "lead_hours": null,
+        "note": "阈值层漏报，提前量无定义"
+      },
+      {
+        "event_id": "E05",
+        "device_id": "M-202",
+        "metric": "电流_A",
+        "four_layer_first": "2026-03-28 08:00",
+        "threshold_first": null,
+        "lead_hours": null,
+        "note": "阈值层漏报，提前量无定义"
+      }
+    ],
+    "positive_leads": 5,
+    "mean_hours": 45.0,
+    "median_hours": 15.0,
+    "max_hours": 103.0,
+    "min_hours": 1.0
+  }
+}

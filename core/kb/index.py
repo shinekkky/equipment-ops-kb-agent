@@ -267,11 +267,21 @@ class KnowledgeIndex:
     # -------------------------------------------------- 检索
 
     @property
+    def vector_enabled(self) -> bool:
+        return self.vector is not None
+
+    @property
     def modes(self) -> list[str]:
-        modes = ["bm25", "hybrid"]
-        if self.vector is not None:
-            modes.insert(1, "vector")
-        return modes
+        """真正可评测的检索模式。
+
+        向量不可用时**不返回 hybrid**：此时 hybrid 在 search() 里会退化为
+        BM25（这是界面上的降级行为，不是一种独立的检索方法）。若评测脚本
+        仍把它列出来，表格里会出现两行完全相同的 BM25 结果，让人误以为
+        "混合检索没有增益"。
+        """
+        if self.vector is None:
+            return ["bm25"]
+        return ["bm25", "vector", "hybrid"]
 
     def search(
         self,

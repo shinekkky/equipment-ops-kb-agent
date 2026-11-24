@@ -15,6 +15,10 @@ uploads/*
 # 报告导出产物
 reports_out/
 
+# Agent 执行记录（可能包含具体运维问题，默认不入库）
+experiments/traces/*.jsonl
+!experiments/traces/.gitkeep
+
 # 临时截图
 .tmp_shots/
 

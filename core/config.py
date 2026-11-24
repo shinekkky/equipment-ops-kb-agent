@@ -17,12 +17,21 @@ MANUALS_DIR = DATA_DIR / "manuals"
 UPLOAD_DIR = BASE_DIR / "uploads"
 INDEX_CACHE_DIR = BASE_DIR / ".index_cache"
 REPORT_OUT_DIR = BASE_DIR / "reports_out"
+# 实验结果与 Agent 执行记录：与 reports_out 分开，避免报告产物把评测结果刷掉。
+EXPERIMENTS_DIR = BASE_DIR / "experiments"
+RESULTS_DIR = EXPERIMENTS_DIR / "results"
+TRACE_LOG_PATH = EXPERIMENTS_DIR / "traces" / "agent_traces.jsonl"
 
 SENSOR_CSV = DATA_DIR / "设备传感器时序数据.csv"
 DEVICE_REGISTRY_CSV = DATA_DIR / "设备台账.csv"
 EVAL_SET_JSONL = DATA_DIR / "检索评测集.jsonl"
+AGENT_EVAL_SET_JSONL = DATA_DIR / "agent_eval_set.jsonl"
+FAULT_TRUTH_JSON = DATA_DIR / "fault_ground_truth.json"
 
-for _d in (DATA_DIR, MANUALS_DIR, UPLOAD_DIR, INDEX_CACHE_DIR, REPORT_OUT_DIR):
+for _d in (
+    DATA_DIR, MANUALS_DIR, UPLOAD_DIR, INDEX_CACHE_DIR, REPORT_OUT_DIR,
+    RESULTS_DIR, TRACE_LOG_PATH.parent,
+):
     _d.mkdir(parents=True, exist_ok=True)
 
 

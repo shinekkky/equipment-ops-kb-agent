@@ -1,0 +1,117 @@
+[
+  {
+    "event_id": "E01",
+    "device_id": "P-101",
+    "fault_type": "缓慢趋势劣化",
+    "start": "2026-03-21 00:00",
+    "end": "2026-03-30 23:00",
+    "primary_metrics": [
+      "温度_℃"
+    ],
+    "secondary_metrics": [
+      "振动_mm_s"
+    ],
+    "description": "轴承温度自第 20 天起每天约 +1.6 ℃，30 天末未越 85 ℃ 报警线。",
+    "expected_layers": [
+      "trend"
+    ],
+    "metric_windows": {}
+  },
+  {
+    "event_id": "E02",
+    "device_id": "P-102",
+    "fault_type": "突发尖峰",
+    "start": "2026-03-16 06:00",
+    "end": "2026-03-16 16:00",
+    "primary_metrics": [
+      "温度_℃"
+    ],
+    "secondary_metrics": [
+      "振动_mm_s"
+    ],
+    "description": "温度在第 15 天 06:00—16:00 冲高至约 92 ℃，越过 85 ℃ 报警线。",
+    "expected_layers": [
+      "threshold",
+      "zscore"
+    ],
+    "metric_windows": {}
+  },
+  {
+    "event_id": "E03",
+    "device_id": "P-103",
+    "fault_type": "短时尖峰（未越限）",
+    "start": "2026-03-13 10:00",
+    "end": "2026-03-13 13:00",
+    "primary_metrics": [
+      "温度_℃"
+    ],
+    "secondary_metrics": [],
+    "description": "温度在第 12 天 10:00—13:00 冲高 +7.5 ℃，全程未越 75 ℃ 预警线。",
+    "expected_layers": [
+      "zscore"
+    ],
+    "metric_windows": {}
+  },
+  {
+    "event_id": "E04",
+    "device_id": "M-201",
+    "fault_type": "缓慢趋势劣化",
+    "start": "2026-03-23 00:00",
+    "end": "2026-03-30 23:00",
+    "primary_metrics": [
+      "振动_mm_s"
+    ],
+    "secondary_metrics": [
+      "温度_℃"
+    ],
+    "description": "振动自第 22 天起每天约 +0.75 mm/s，第 27 天前后越过报警线；温度因摩擦生热自第 24 天起伴随上升。",
+    "expected_layers": [
+      "trend",
+      "threshold"
+    ],
+    "metric_windows": {
+      "温度_℃": [
+        "2026-03-25 00:00",
+        "2026-03-30 23:00"
+      ]
+    }
+  },
+  {
+    "event_id": "E05",
+    "device_id": "M-202",
+    "fault_type": "多变量隐性漂移",
+    "start": "2026-03-17 00:00",
+    "end": "2026-03-30 23:00",
+    "primary_metrics": [
+      "温度_℃",
+      "振动_mm_s",
+      "电流_A"
+    ],
+    "secondary_metrics": [],
+    "description": "温度/振动/电流自第 16 天起同步缓慢偏移，单指标均未越限。",
+    "expected_layers": [
+      "multivariate"
+    ],
+    "metric_windows": {}
+  },
+  {
+    "event_id": "E06",
+    "device_id": "SW-01",
+    "fault_type": "资源耗尽趋势",
+    "start": "2026-03-26 00:00",
+    "end": "2026-03-30 23:00",
+    "primary_metrics": [
+      "CPU利用率_%",
+      "端口丢包率_%"
+    ],
+    "secondary_metrics": [
+      "内存利用率_%"
+    ],
+    "description": "CPU 与端口丢包率自第 25 天起同步攀升，先后越过报警线。",
+    "expected_layers": [
+      "threshold",
+      "trend"
+    ],
+    "metric_windows": {}
+  }
+]

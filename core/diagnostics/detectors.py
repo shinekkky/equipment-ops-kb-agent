@@ -581,9 +581,25 @@ def retrieval_hint(anomaly: Anomaly) -> tuple[str, str]:
 # ---------------------------------------------------------------- 单设备总入口
 
 
-def detect_device(df: pd.DataFrame, device: dict) -> list[Anomaly]:
-    """对一台设备跑满四层，返回全部原始发现。"""
+DEFAULT_LAYERS = frozenset({"threshold", "zscore", "trend", "multivariate"})
+
+
+def detect_device(
+    df: pd.DataFrame,
+    device: dict,
+    layers: set[str] | frozenset[str] | None = None,
+) -> list[Anomaly]:
+    """对一台设备运行指定检测层，返回全部原始发现。
+
+    layers=None 表示跑满四层；评测消融时传入单层集合，复用同一套检测代码，
+    避免"评测副本"和线上逻辑各写一份、最后对不上。
+    """
     from .thresholds import MULTIVARIATE_FEATURES
+
+    active = DEFAULT_LAYERS if layers is None else frozenset(layers)
+    unknown = active - DEFAULT_LAYERS
+    if unknown:
+        raise ValueError(f"未知检测层：{', '.join(sorted(unknown))}")
 
     device_type, model = device["设备类型"], device["设备型号"]
     found: list[Anomaly] = []
@@ -591,12 +607,15 @@ def detect_device(df: pd.DataFrame, device: dict) -> list[Anomaly]:
     for band in bands_for(device_type, model):
         if band.metric not in df.columns or not df[band.metric].notna().any():
             continue
-        found.extend(detect_threshold(df, band, device))
-        found.extend(detect_zscore(df, band, device))
-        found.extend(detect_trend(df, band, device))
+        if "threshold" in active:
+            found.extend(detect_threshold(df, band, device))
+        if "zscore" in active:
+            found.extend(detect_zscore(df, band, device))
+        if "trend" in active:
+            found.extend(detect_trend(df, band, device))
 
     features = MULTIVARIATE_FEATURES.get(device_type, [])
-    if features:
+    if features and "multivariate" in active:
         found.extend(detect_multivariate(df, features, device))
 
     return found
